@@ -14,12 +14,14 @@ You can take this code from the previous laboratory.
 Implement the ReLU activation function class. The ReLU activation function is defined as follows:
 $$\text{ReLU}(x) = \max(0, x)$$
 The gradient of the ReLU activation function is defined as follows:
+
 $$\frac{\partial \text{ReLU}(x)}{\partial x} = \begin{cases} 1 & \text{if } x > 0 \\ 0 & \text{otherwise} \end{cases}$$
+
 Implement the ReLU activation function and its gradient in the ReLUActivation class. Computing the function value should be implemented in the forward method while computing the gradient should be implemented in the backward method. Both the forward and backward methods should be able to handle both single samples and batches of samples.
 
 ### Task 1.3: Implementing the softmax activation function class
 Implement the softmax activation function class. The softmax activation function is defined as follows:
-$$\text{softmax}(\mathbf{x}) = \frac{e^{\mathbf{x}}}{\sum_{i=1}^{N} e^{x_i}}$$
+$$\text{softmax}(\mathbf{x}) = \frac{e^{\mathbf{x}}}{{\sum^{N}}_{i=1} e^{x_i}}$$
 Where:
 - $\mathbf{x}$ is a vector of values
 - $N$ is the number of elements in the vector
