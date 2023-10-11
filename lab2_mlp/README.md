@@ -51,10 +51,10 @@ Implement the fully connected layer class. The fully connected layer class shoul
 - \_\_init\_\_ - initializes the fully connected layer class (already implemented), and initializes the weights and bias (not implemented)
 Use Kaiming He initialization for the weights and set the bias to zero.
 Kaiming He initialization is defined as follows:
-$$\mathbf{w} \sim \mathcal{N}(0, \sqrt{\frac{2}{\text{fan_in}}})$$
+$$\mathbf{w} \sim \mathcal{N}(0, \sqrt{\frac{2}{\text{x}_{\text{dim}}}})$$
 Where:
 - $\mathbf{w}$ is the weight vector
-- $\text{fan_in}$ is the number of input units
+- $\text{x}_{\text{dim}}$ is the number of input units
 - $\mathcal{N}$ is the normal distribution
 - $\sim$ means "is sampled from"
 
