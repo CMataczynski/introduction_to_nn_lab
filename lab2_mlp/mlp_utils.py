@@ -1,7 +1,5 @@
 import numpy as np
 
-import numpy as np
-
 class ReLUActivation:
     def forward(self, input: np.ndarray) -> np.ndarray:
         """
@@ -13,8 +11,7 @@ class ReLUActivation:
         Returns:
             np.ndarray: Output of the ReLU activation.
         """
-        # ReLU function: f(x) = max(0, x)
-        return np.maximum(input, 0)
+        pass
 
     def backward(self, input: np.ndarray, grad_output: np.ndarray) -> np.ndarray:
         """
@@ -27,10 +24,7 @@ class ReLUActivation:
         Returns:
             np.ndarray: Gradient of the loss with respect to the input.
         """
-        # The derivative of ReLU:
-        # f'(x) = 1 if x > 0, 0 otherwise
-        relu_grad = input > 0
-        return grad_output * relu_grad  
+        pass
 
 class SigmoidActivation:
     def forward(self, input: np.ndarray) -> np.ndarray:
@@ -43,9 +37,8 @@ class SigmoidActivation:
         Returns:
             np.ndarray: Output of the Sigmoid activation.
         """
-        # Sigmoid function: f(x) = 1 / (1 + exp(-x))
-        self.sigmoid = 1 / (1 + np.exp(-input))
-        return self.sigmoid
+        pass
+
 
     def backward(self, input: np.ndarray, grad_output: np.ndarray) -> np.ndarray:
         """
@@ -58,9 +51,7 @@ class SigmoidActivation:
         Returns:
             np.ndarray: Gradient of the loss with respect to the input.
         """
-        # The derivative of the Sigmoid function:
-        # f'(x) = f(x) * (1 - f(x))
-        return grad_output * self.sigmoid * (1 - self.sigmoid)
+        pass
 
 class SoftmaxActivation:
     def forward(self, input: np.ndarray) -> np.ndarray:
@@ -77,9 +68,7 @@ class SoftmaxActivation:
         input = input - np.max(input, axis=1, keepdims=True)
         exponents = np.exp(input)
         
-        # Softmax function for each row:
-        # f(x)_i = exp(x_i) / sum(exp(x_j) for j in range(num_classes))
-        return exponents / np.sum(exponents, axis=1, keepdims=True)
+        pass
 
     def backward(self, input: np.ndarray, grad_output: np.ndarray) -> np.ndarray:
         """
@@ -92,15 +81,8 @@ class SoftmaxActivation:
         Returns:
             np.ndarray: Gradient of the loss with respect to the input, with the same shape as input.
         """
-        softmax = self.forward(input)
-        
-        # The derivative of the Softmax function:
-        # f'(x)_i = f(x)_i * (1 - f(x)_i) for i
-        # f'(x)_i = -f(x)_i * f(x)_j for j != i
-        return grad_output * softmax * (1 - softmax)
+        pass
 
-
-import numpy as np
 
 class CrossEntropyLoss:
     def __init__(self, stability=1e-10) -> None:
@@ -123,25 +105,8 @@ class CrossEntropyLoss:
         Returns:
             float: The computed loss.
         """
-        # Clip predictions to prevent numerical instability
-        predictions = np.clip(predictions, self.stability, 1 - self.stability)
-        
-        # Compute the loss using the Cross-Entropy formula with stability
-        loss = -np.sum(target * np.log(predictions + self.stability) + (1 - target) * np.log(1 - predictions + self.stability)) / predictions.shape[0]
-        
-        # Compute the gradient of the loss with respect to predictions
-        grad = (predictions - target) / (predictions * (1 - predictions) + self.stability) / predictions.shape[0]
-        
-        return loss, grad
+        pass
     
-    def empty_grad(self):
-        """
-        Create an empty gradient array of the same shape as the gradient computed during forward pass.
-
-        Returns:
-            np.ndarray: An array of zeros with the same shape as the gradient.
-        """
-        return np.zeros_like(self.grad)
 
 class SGD:
     def __init__(self, learning_rate, clip_range=10) -> None:
@@ -184,57 +149,6 @@ class SGD:
         updated_bias = bias - self.learning_rate * clipped_grad
         return updated_bias
 
-class Perceptron:
-    def __init__(self, input_size, activation, optimizer) -> None:
-        """
-        Initialize a fully connected layer.
-
-        Args:
-            input_size (int): Number of input units.
-            activation: The activation function to use (e.g., sigmoid, ReLU).
-            optimizer: The optimizer for updating weights and biases (e.g., SGD, Adam).
-        """
-        self.input_size = input_size
-        self.activation = activation
-        self.optimizer = optimizer  
-
-        self.weights = np.random.randn(input_size) * np.sqrt(2 / input_size)
-        self.bias = np.zeros(1)
-    
-    def forward(self, input): 
-        """
-        Perform the forward pass through the layer.
-
-        Args:
-            input (np.ndarray): Input data of shape (batch_size, input_size).
-
-        Returns:
-            np.ndarray: Output of the layer after applying activation, shape (batch_size, 1).
-        """
-        self.input = input
-        perceptron = np.dot(input, self.weights) + self.bias
-        self.activation_input = perceptron
-        output = self.activation.forward(perceptron)
-        return output
-    
-    def backward(self, grad_output):
-        """
-        Perform the backward pass through the layer.
-
-        Args:
-            grad_output (np.ndarray): Gradient of the loss with respect to the layer's output.
-
-        Returns:
-            np.ndarray: Gradient of the loss with respect to the layer's input, shape (batch_size, input_size).
-        """
-        grad_input = self.activation.backward(self.activation_input, grad_output)
-        self.weights_grad = np.dot(self.input.T, grad_input)
-        self.bias_grad = np.sum(grad_input, axis=0)
-        self.weights = self.optimizer.update_weights(self.weights, self.weights_grad)
-        self.bias = self.optimizer.update_bias(self.bias, self.bias_grad)
-        return np.dot(grad_input, self.weights.T)
-
-
 class FullyConnectedLayer:
     def __init__(self, input_size, output_size, activation, optimizer) -> None:
         """
@@ -251,17 +165,9 @@ class FullyConnectedLayer:
         self.activation = activation
         self.optimizer = optimizer
         
-        # Kaiming He initialization for weights
-        self.weights = np.random.randn(input_size, output_size) * np.sqrt(2 / input_size)
-        self.bias = np.zeros(output_size)
-        self.empty_grad()
-
-    def empty_grad(self):
-        """
-        Initialize gradient arrays for weights and biases with zeros.
-        """
-        self.weights_grad = np.zeros_like(self.weights)
-        self.bias_grad = np.zeros_like(self.bias)
+        #TODO: Kaiming He initialization for weights
+        self.weights = None
+        self.bias = None
 
     def forward(self, input):
         """
@@ -273,19 +179,7 @@ class FullyConnectedLayer:
         Returns:
             np.ndarray: Output of the layer after applying activation, shape (batch_size, output_size).
         """
-        self.input = input
-        perceptron = np.dot(input, self.weights) + self.bias
-        self.activation_input = perceptron
-
-        # Compute the weighted sum (perceptron) of inputs:
-        # \[ \text{perceptron} = \mathbf{X} \cdot \mathbf{W} + \mathbf{b} \]
-        
-        output = self.activation.forward(perceptron)
-
-        # Apply the activation function to the perceptron:
-        # \[ \text{output} = \sigma(\text{perceptron}) \]
-
-        return output
+        pass
     
     def backward(self, grad_output):
         """
@@ -297,29 +191,7 @@ class FullyConnectedLayer:
         Returns:
             np.ndarray: Gradient of the loss with respect to the layer's input, shape (batch_size, input_size).
         """
-        grad_input = self.activation.backward(self.activation_input, grad_output)
-
-        # Compute the gradient of the loss with respect to the input:
-        # \[ \text{grad\_input} = \frac{{d\text{Loss}}}{{d\text{perceptron}}} \cdot \frac{{d\text{perceptron}}}{{d\text{input}}} \]
-
-        self.weights_grad = np.dot(self.input.T, grad_input)
-        
-        # Compute the gradient of the loss with respect to the weights:
-        # \[ \text{weights\_grad} = \frac{{d\text{Loss}}}{{d\text{perceptron}}} \cdot \frac{{d\text{perceptron}}}{{d\text{weights}}} \]
-
-        self.bias_grad = np.sum(grad_input, axis=0)
-
-        # Update the weights using the optimizer:
-        # \[ \text{weights} = \text{weights} - \text{learning\_rate} \cdot \text{weights\_grad} \]
-        
-        self.weights = self.optimizer.update_weights(self.weights, self.weights_grad)
-
-        # Update the bias using the optimizer:
-        # \[ \text{bias} = \text{bias} - \text{learning\_rate} \cdot \text{bias\_grad} \]
-
-        self.bias = self.optimizer.update_bias(self.bias, self.bias_grad)
-
-        return np.dot(grad_input, self.weights.T)
+        pass
     
 class FeedForwardNet:
     def __init__(
@@ -345,17 +217,9 @@ class FeedForwardNet:
 
         self.loss_object = CrossEntropyLoss()
 
-        # Create layers for the network
-        self.layers = [
-            FullyConnectedLayer(input_size, hidden_layers[0], intermittent_activation(), optimizer())
-        ]
-        for i in range(len(hidden_layers) - 1):
-            self.layers.append(
-                FullyConnectedLayer(hidden_layers[i], hidden_layers[i + 1], intermittent_activation(), optimizer())
-            )
-        self.layers.append(
-            FullyConnectedLayer(hidden_layers[-1], output_size, output_activation(), optimizer())
-        )
+        #TODO: Initialize list of layers for the network.
+        self.layers = []
+
 
     def forward(self, input):
         """
@@ -367,10 +231,7 @@ class FeedForwardNet:
         Returns:
             np.ndarray: Output of the network, shape (batch_size, output_size).
         """
-        output = input
-        for layer in self.layers:
-            output = layer.forward(output)
-        return output
+        pass
 
     def backward(self, output, target):
         """
@@ -383,7 +244,4 @@ class FeedForwardNet:
         Returns:
             float: Loss computed using the Cross-Entropy loss function.
         """
-        loss, grad = self.loss_object.forward(output, target)
-        for layer in reversed(self.layers):
-            grad = layer.backward(grad)
-        return loss
+        pass

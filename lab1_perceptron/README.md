@@ -91,3 +91,10 @@ Implement the training loop. The training loop should implement the following st
 
 ### Task 3.2: Evaluating the perceptron
 Implement the compute_accuracy function. The compute_accuracy function should compute the accuracy of the perceptron on the given dataset.
+
+Run the training_loop.py code.
+
+## Final notes
+This laboratory will be graded along with the next one where you will implement a simple neural network. The work you do in this laboratory will be used in the next one. You need to include following files from this laboratory:
+- perceptron_utils.py
+- screenshots of the results of running the training_loop.py code

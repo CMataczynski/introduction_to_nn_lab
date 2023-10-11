@@ -50,16 +50,16 @@ class ModelTrainer:
             for i in range(0, train_data.shape[0], batch_size):
                 data_batch = train_data[i:i + batch_size]
                 target_batch = train_target[i:i + batch_size]
-                output = model.forward(data_batch)
-                loss = model.backward(output, target_batch)
+                output = self.model.forward(data_batch)
+                loss = self.model.backward(output, target_batch)
                 acc = compute_accuracy(output, target_batch)
 
                 train_losses.append(loss)
                 train_accuracies.append(acc)
             
             train_loss = np.mean(train_losses)
-            test_output = model.forward(test_data)
-            test_loss, _ = model.loss_object.forward(test_output, test_target)
+            test_output = self.model.forward(test_data)
+            test_loss, _ = self.model.loss_object.forward(test_output, test_target)
             test_accuracy = compute_accuracy(test_output, test_target)
             train_accuracy = np.mean(train_accuracies)
         
