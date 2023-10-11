@@ -21,7 +21,7 @@ Implement the ReLU activation function and its gradient in the ReLUActivation cl
 
 ### Task 1.3: Implementing the softmax activation function class
 Implement the softmax activation function class. The softmax activation function is defined as follows:
-$$\text{softmax}(\mathbf{x}) = \frac{e^{\mathbf{x}}}{{\sum^{N}}_{i=1} e^{x_i}}$$
+$$\text{softmax}(\mathbf{x}) = \frac{e^{\mathbf{x}}}{\sum^{N}_{i=1} e^{x_i}}$$
 Where:
 - $\mathbf{x}$ is a vector of values
 - $N$ is the number of elements in the vector
