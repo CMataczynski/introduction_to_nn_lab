@@ -22,7 +22,7 @@ def compute_accuracy(output, target, threshold=0.5):
     pass
 
 class ModelTrainer:
-    def __init__(self, model, loss_object) -> None:
+    def __init__(self, model, loss_object, notebook=False) -> None:
         """
         Initialize ModelTrainer.
 
@@ -32,6 +32,7 @@ class ModelTrainer:
         """
         self.model = model
         self.loss_object = loss_object
+        self.notebook = notebook
 
     def train_batch(self, data_batch, target_batch):
         """Train the model on a single batch of data and corresponding labels.
@@ -64,9 +65,10 @@ class ModelTrainer:
         Returns:
             class Perceptron: Trained model.
         """
-        plt.ion()
-        fig, axs = plt.subplots(2, 1, figsize=(12, 8))
-        ax_loss, ax_accuracy = axs
+        if not self.notebook:
+            plt.ion()
+            fig, axs = plt.subplots(2, 1, figsize=(12, 8))
+            ax_loss, ax_accuracy = axs
         self.epoch_counter = []  # Store epoch numbers
 
         self.train_loss_history = []
@@ -101,15 +103,35 @@ class ModelTrainer:
             update_progress_bar(pbar, epoch + 1, train_loss, test_loss, test_accuracy)
             
             #update training visualization
-            self.update_training_visualization(ax_loss, ax_accuracy)
+            if not self.notebook:
+                self.update_training_visualization(ax_loss, ax_accuracy)
 
-            fig.canvas.draw()
-            plt.pause(0.01)
+                fig.canvas.draw()
+                plt.pause(0.01)
     
         # Turn off interactive mode after training
-        plt.ioff()
-        plt.show()
+        if not self.notebook:
+            plt.ioff()
+            plt.show()
+        else:
+            self.plot_all_results()
         return self.model
+
+    def plot_all_results(self):
+        _, axs = plt.subplots(2, 1, figsize=(12, 8))
+        ax_loss, ax_accuracy = axs
+        ax_loss.plot(self.epoch_counter, self.train_loss_history, label='Train Loss')
+        ax_loss.plot(self.epoch_counter, self.test_loss_history, label='Test Loss')
+        ax_loss.set_xlabel('Epoch')
+        ax_loss.set_ylabel('Loss')
+        ax_loss.legend()
+
+        ax_accuracy.plot(self.epoch_counter, self.train_accuracy_history, label='Train Accuracy')
+        ax_accuracy.plot(self.epoch_counter, self.test_accuracy_history, label='Test Accuracy')
+        ax_accuracy.set_xlabel('Epoch')
+        ax_accuracy.set_ylabel('Accuracy (%)')
+        ax_accuracy.legend()
+        plt.show()
 
     def update_training_visualization(self, ax_loss, ax_accuracy):
         """
