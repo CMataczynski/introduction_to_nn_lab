@@ -3,17 +3,19 @@
 introduction to simple networks, numpy implementation of Perceptron and MLP
 
 ### 27.10.2024
-The deadline for returning the code from numpy implementation of Perceptron and MLP labs.
+Q&A on previous tasks
 
-Additionally:
+if there's enough time:
 
-intro to pytorch, pytorch implementation of Perceptron and MLP
+intro to pytorch, Pytorch data handling
 
 ### 10.11.2023
-Pytorch data handling
+The deadline for returning the code from numpy implementation of Perceptron and MLP labs.
+
+Pytorch models, pytorch implementation of Perceptron and MLP
 
 ### 17.11.2023 
-Pytorch models, training, debugging
+Pytorch training, debugging
 
 ### 24.11.2023 
 The deadline for pytorch tasks
