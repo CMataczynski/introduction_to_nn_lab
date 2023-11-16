@@ -21,5 +21,11 @@ Oddanie projektu powinno składać się z dwóch plików, a kod do niego powinie
 9. Wyjaśnialność sieci -- wizualizacje predykcji przy pomocy algorytmu [GradCAM](https://github.com/jacobgil/pytorch-grad-cam)
 10. Analizy sieci do konkretnych zadań klasyfikacji.
 11. Sieci generatywne na przykładzie FashionMNIST.
+12. Wpływ współczynnika uczenia na zbieżność prostej sieci neurnowej.
+13. Liczba parametrów i przykładów uczących a przeuczenie modelu na podstawie prostej sieci.
+14. Analiza gradientu w głębokich sieciach w pełni połączonych.
+15. Krawędź decyzyjna sieci jedno i wielo-warstwowych na przykładzie bramki XOR.
+16. Dodawanie, czyli eksploracja generalizacji sieci neuronowych.
+17. Zamrażanie wag i ocena transferu wiedzy pomiędzy modelami.
 
 Niektóre z tematów są bardziej ogólne i będą wymagały uszczegółowienia, inne są dość szczególne i będą wymagały głównie omówienia. 
